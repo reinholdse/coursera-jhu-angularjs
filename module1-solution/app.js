@@ -7,11 +7,14 @@ angular.module('LunchCheck', [])
 LunchCheckController.$inject = ['$scope'];
 function LunchCheckController($scope) {
   $scope.list = "";
+  $scope.color = "none";
 
   $scope.sayMessage = function() {
     var dish_list = $scope.list.split(",");
     var dish_count = countDishes(dish_list);
-    $scope.message = generateMessage(dish_count);
+    var output = generateOutput(dish_count);
+    $scope.message = output[0];
+    $scope.color = output[1];
   }
 
   function countDishes(dish_list) {
@@ -22,15 +25,26 @@ function LunchCheckController($scope) {
     return dish_count;
   }
 
-  function generateMessage(dish_count) {
-    var message = "";
-    if (!dish_count)
+  function generateOutput(dish_count) {
+    var message = "",
+        color = "";
+    if (!dish_count) {
       message = "Please enter data first";
-    else if (dish_count < 4)
+      color = "red";
+    }
+    else if (dish_count < 4) {
       message = "Enjoy!";
-    else
+      color = "green";
+    }
+    else {
       message = "Too much!";
-    return message;
+      color = "green";
+    }
+    return [message, color];
+  }
+
+  function color() {
+
   }
 
 }
